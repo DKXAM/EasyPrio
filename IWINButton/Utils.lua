@@ -262,14 +262,18 @@ function IWBUtils:FindBuff(buff, unit)
 end
 
 function IWBUtils:FindDebuff(debuff, unit)
-	for i=1, 64 do
-		IWBTooltip:SetUnitDebuff(unit, i);
+    for i=1, 64 do
+        IWBTooltip:SetUnitDebuff(unit, i);
         local text = IWBTooltip:GetText("TextLeft1");
 
-		if text and strfind(text, debuff) then
-			local _, count = UnitDebuff(unit, i)
-			return true, count
-		end
-	end
-    return false, 0
+        if text and strfind(text, debuff) then
+            local _, count, _, _, duration, expirationTime = UnitDebuff(unit, i)
+            local timeLeft = nil
+            if duration and expirationTime then
+                timeLeft = expirationTime - GetTime()
+            end
+            return true, count, timeLeft
+        end
+    end
+    return false, 0, nil
 end

@@ -11,7 +11,7 @@ IWB_SPELL_REF  = {
 	["Battle Shout"] = {["handler"] = IWBBuff, ["no_rank"] = true},
 	["Cleave"] = {["handler"] = IWBRageNextMelee, ["no_rank"] = true, ["auto_target"] = true},
 	["Rend"] = {["handler"] = IWBDebuff, ["no_rank"] = true, ["auto_target"] = true, ["target_hp"] = true},
-	["Sunder Armor"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
+	["Sunder Armor"] = { ["handler"] = IWBDebuffStack, ["no_rank"] = true, ["auto_target"] = true, ["duration"] = 30 },
 	["Battle Stance"] = {["handler"] = IWBStance},
 	["Defensive Stance"] = {["handler"] = IWBStance},
 	["Berseker Stance"] = {["handler"] = IWBStance},
