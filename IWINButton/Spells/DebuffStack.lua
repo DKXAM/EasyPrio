@@ -90,8 +90,8 @@ function IWBDebuffStack:IsReady(spell)
     local isReady, slot = IWBSpellBase.IsReady(self, spell)
     if isReady then
         local isFound, count, timeLeft = IWBUtils:FindDebuff(spell["name"], "target")
-        local maxStacks = spell["max_stacks"] or 5
-        local refreshWindow = spell["refresh_window"] or 5
+        local maxStacks = tonumber(spell["max_stacks"]) or 5
+        local refreshWindow = tonumber(spell["refresh_window"]) or 5
         if not isFound then
             isReady = true
         else
@@ -99,7 +99,7 @@ function IWBDebuffStack:IsReady(spell)
                 isReady = true
             else
                 -- Check time left for refresh window
-                if timeLeft and timeLeft < refreshWindow then
+                if timeLeft ~= nil and refreshWindow ~= nil and timeLeft < refreshWindow then
                     isReady = true
                 else
                     isReady = false
