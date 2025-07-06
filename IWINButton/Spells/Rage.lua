@@ -66,7 +66,7 @@ end
 function IWBRage:IsReady(spell)
 	local isReady, slot = IWBSpellBase.IsReady(self, spell)
 	if isReady then
-		isReady = UnitMana("player") >= tonumber(spell["rage"])
+		isReady = UnitMana("player") >= (tonumber(spell["rage"]) or 0)
 	end
 	return isReady, slot
 end
