@@ -31,7 +31,7 @@ IWB_SPELL_REF  = {
 	["Bloodthirst"] = {["handler"] = IWBRage, ["no_rank"] = true, ["auto_target"] = true},
 	["Shield Slam"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
 	["Concussion Blow"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
-	["Slam"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
+	["Slam"] = {["handler"] = IWBRage, ["no_rank"] = true, ["auto_target"] = true},
 	["Counterattack"] = {["handler"] = IWBSpellBase, ["no_rank"] = true},
 	["Whirlwind"] = {["handler"] = IWBRage},
 	["Pummel"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
