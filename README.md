@@ -20,7 +20,7 @@ Modern AI techniques were used in the creation of this addon to let you enjoy th
 |3. | Add desired spells from your SpellBook by clicking them while holding Ctrl+Shift. |<img src="spells.jpg" width="600"/>|
 |4. | Settings for the selected spell (if available) will appear below the list. |<img src="spell_conf.jpg" width="600"/>|
 |5. | It's important to also drag the selected spells from the SpellBook to your action bar. |<img src="panel.jpg" width="600"/>|
-|6. | Next, click **Macros** and drag it to your action bar. This creates a macro for your current character. You can change the icon if you wish. |<img src="macros.jpg" width="100"/>|
+|6. | Next, click **Macros** and drag it to your action bar. This creates a macro for your current character. You can change the icon if you wish. The macro will also appear in your game's Macro UI, where you can further customize its icon and name just like any other macro. |<img src="macros.jpg" width="100"/>|
 |7. | Done!||
 
 ###### Warning! This addon may be addictive.
