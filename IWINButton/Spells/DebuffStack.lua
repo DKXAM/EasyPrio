@@ -2,7 +2,7 @@
 IWBDebuffStack = IWBDebuff:New("DebuffStack")
 
 function IWBDebuffStack:ShowConfig(spell, onChange)
-    local lastFrame = IWBSpellBase.ShowConfig(self, spell, onChange)
+    local lastFrame = IWBDebuff.ShowConfig(self, spell, onChange)
 
     -- Max Stacks UI
     if spell["name"] == "Sunder Armor" then
