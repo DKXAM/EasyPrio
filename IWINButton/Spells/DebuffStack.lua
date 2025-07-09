@@ -51,12 +51,15 @@ end
 function IWBDebuffStack:IsReady(spell)
     local isReady, slot = IWBSpellBase.IsReady(self, spell)
     if isReady then
+        if spell["target_hp"] == nil or spell["target_hp"] == "" then
+            spell["target_hp"] = 0
+        end
         local isFound, count = IWBUtils:FindDebuff(spell["name"], "target")
         local maxStacks = tonumber(spell["max_stacks"]) or 5
         if not isFound then
-            isReady = true
+            isReady = (UnitHealth("target") >= tonumber(spell["target_hp"]))
         else
-            isReady = count < maxStacks
+            isReady = (count < maxStacks) and (UnitHealth("target") >= tonumber(spell["target_hp"]))
         end
     end
     return isReady, slot
