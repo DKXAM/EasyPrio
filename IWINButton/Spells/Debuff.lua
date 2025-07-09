@@ -10,7 +10,7 @@ function IWBDebuff:CreateFrame()
 	hpCond:SetPoint("TOPLEFT", self.frame, "BOTTOMLEFT", 0, -10)
 
 	local artLayer = hpCond:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-	artLayer:SetText("Target HP")
+	artLayer:SetText("Target HP (%)")
 	artLayer:SetPoint("TOPLEFT", 0,0)
 
 	local artLayer2 = hpCond:CreateFontString(nil, "ARTWORK", "GameFontNormal")
@@ -76,9 +76,10 @@ function IWBDebuff:IsReady(spell)
 		if spell["target_hp"] == nil or spell["target_hp"] == "" then
 			spell["target_hp"] = 0
 		end
-	
-		isReady = (not IWBUtils:FindDebuff(spell["name"], "target")) and 
-					(UnitHealth("target") >= tonumber(spell["target_hp"]))
+		local hp = UnitHealth("target")
+		local maxhp = UnitHealthMax("target")
+		local percent = (maxhp > 0) and (hp / maxhp * 100) or 0
+		isReady = (not IWBUtils:FindDebuff(spell["name"], "target")) and (percent >= tonumber(spell["target_hp"]))
 	end
 	return isReady, slot
 end
