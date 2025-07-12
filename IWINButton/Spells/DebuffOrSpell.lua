@@ -45,7 +45,11 @@ end
 
 function IWBDebuffOrSpell:IsReady(spell)
 	local isReady, slot = IWBSpellBase.IsReady(self, spell)
-	
+	if spell["name"] == "Demoralizing Shout" then
+		if UnitIsDead("target") or not UnitCanAttack("player", "target") then
+			return false, slot
+		end
+	end
 	if isReady and (spell["behavior"] == "Debuff") then
 		isReady = not IWBUtils:FindDebuff(spell["name"], "target")
 	end

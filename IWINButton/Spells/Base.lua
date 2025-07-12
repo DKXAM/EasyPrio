@@ -148,6 +148,39 @@ function IWBSpellBase:ShowConfig(spell, onChange)
 	else
 		self.frame.autoCond:Hide()
 	end
+	-- Min Rage UI for Overpower
+	if spell["name"] == "Overpower" then
+		if not self.frame.minRageCond then
+			local minRageCond = CreateFrame("Frame", nil, self.frame)
+			minRageCond:SetWidth(90)
+			minRageCond:SetHeight(22)
+			minRageCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+			local minRageLabel = minRageCond:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+			minRageLabel:SetText("Min Rage")
+			minRageLabel:SetPoint("TOPLEFT", 0, 0)
+			local minRageEdit = CreateFrame("EditBox", nil, minRageCond)
+			minRageEdit:SetWidth(30)
+			minRageEdit:SetHeight(22)
+			minRageEdit:SetPoint("LEFT", minRageLabel, "RIGHT", 10, 0)
+			minRageEdit:SetNumeric(true)
+			minRageEdit:SetMaxLetters(3)
+			minRageEdit:SetAutoFocus(false)
+			minRageEdit:SetFontObject("GameFontHighlightSmall")
+			minRageCond.editBox = minRageEdit
+			minRageEdit:SetScript("OnEnterPressed", function() this:ClearFocus() end)
+			minRageEdit:SetScript("OnTextChanged", function() spell["min_rage"] = this:GetText() end)
+			self.frame.minRageCond = minRageCond
+		end
+		self.frame.minRageCond:Show()
+		self.frame.minRageCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+		if spell["min_rage"] == nil or spell["min_rage"] == "" then
+			spell["min_rage"] = 0
+		end
+		self.frame.minRageCond.editBox:SetText(spell["min_rage"])
+		lastFrame = self.frame.minRageCond
+	elseif self.frame.minRageCond then
+		self.frame.minRageCond:Hide()
+	end
 	
 	return lastFrame
 end
@@ -174,6 +207,13 @@ function IWBSpellBase:IsReady(spell)
 	
 	if (IWB_SPELL_REF[spell["name"]] ~= nil) and (IWB_SPELL_REF[spell["name"]]["need_range"] ~= nil) and (UnitCanAttack("player", "target") ~= nil) then
 		isReady = isReady and (CheckInteractDistance("target", IWB_SPELL_REF[spell["name"]]["need_range"]) == 1)
+	end
+	-- Min Rage logic for Overpower
+	if spell["name"] == "Overpower" then
+		local min_rage = tonumber(spell["min_rage"]) or 0
+		if UnitMana("player") < min_rage then
+			isReady = false
+		end
 	end
 	
 	return isReady, slot

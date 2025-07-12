@@ -45,12 +45,46 @@ function IWBDebuffStack:ShowConfig(spell, onChange)
         if self.frame.maxStackCond then self.frame.maxStackCond:Hide() end
     end
 
+    -- Min Rage UI
+    if not self.frame.minRageCond then
+        local minRageCond = CreateFrame("Frame", nil, self.frame)
+        minRageCond:SetWidth(90)
+        minRageCond:SetHeight(22)
+        minRageCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+        local minRageLabel = minRageCond:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+        minRageLabel:SetText("Min Rage")
+        minRageLabel:SetPoint("TOPLEFT", 0, 0)
+        local minRageEdit = CreateFrame("EditBox", nil, minRageCond)
+        minRageEdit:SetWidth(30)
+        minRageEdit:SetHeight(22)
+        minRageEdit:SetPoint("LEFT", minRageLabel, "RIGHT", 10, 0)
+        minRageEdit:SetNumeric(true)
+        minRageEdit:SetMaxLetters(3)
+        minRageEdit:SetAutoFocus(false)
+        minRageEdit:SetFontObject("GameFontHighlightSmall")
+        minRageCond.editBox = minRageEdit
+        minRageEdit:SetScript("OnEnterPressed", function() this:ClearFocus() end)
+        minRageEdit:SetScript("OnTextChanged", function() spell["min_rage"] = this:GetText() end)
+        self.frame.minRageCond = minRageCond
+    end
+    self.frame.minRageCond:Show()
+    self.frame.minRageCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+    if spell["min_rage"] == nil or spell["min_rage"] == "" then
+        spell["min_rage"] = 0
+    end
+    self.frame.minRageCond.editBox:SetText(spell["min_rage"])
+    lastFrame = self.frame.minRageCond
+
     return lastFrame
 end
 
 function IWBDebuffStack:IsReady(spell)
     local isReady, slot = IWBSpellBase.IsReady(self, spell)
     if isReady then
+        local min_rage = tonumber(spell["min_rage"]) or 0
+        if UnitMana("player") < min_rage then
+            return false, slot
+        end
         if spell["target_hp"] == nil or spell["target_hp"] == "" then
             spell["target_hp"] = 0
         end
