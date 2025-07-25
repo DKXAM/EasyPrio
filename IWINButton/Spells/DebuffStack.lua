@@ -10,7 +10,11 @@ function IWBDebuffStack:ShowConfig(spell, onChange)
             local maxStackCond = CreateFrame("Frame", nil, self.frame)
             maxStackCond:SetWidth(120)
             maxStackCond:SetHeight(22)
-            maxStackCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+            if lastFrame and lastFrame.SetPoint then
+                maxStackCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+            else
+                maxStackCond:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
+            end
 
             local label = maxStackCond:CreateFontString(nil, "ARTWORK", "GameFontNormal")
             label:SetText("Max Stacks")
@@ -38,7 +42,11 @@ function IWBDebuffStack:ShowConfig(spell, onChange)
             self.frame.maxStackCond = maxStackCond
         end
         self.frame.maxStackCond:Show()
-        self.frame.maxStackCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+        if lastFrame and lastFrame.SetPoint then
+            self.frame.maxStackCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+        else
+            self.frame.maxStackCond:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
+        end
         self.frame.maxStackCond.editBox:SetText(spell["max_stacks"] or 5)
         lastFrame = self.frame.maxStackCond
     else
@@ -50,7 +58,11 @@ function IWBDebuffStack:ShowConfig(spell, onChange)
         local minRageCond = CreateFrame("Frame", nil, self.frame)
         minRageCond:SetWidth(90)
         minRageCond:SetHeight(22)
-        minRageCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+        if lastFrame and lastFrame.SetPoint then
+            minRageCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+        else
+            minRageCond:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
+        end
         local minRageLabel = minRageCond:CreateFontString(nil, "ARTWORK", "GameFontNormal")
         minRageLabel:SetText("Min Rage")
         minRageLabel:SetPoint("TOPLEFT", 0, 0)
@@ -68,7 +80,11 @@ function IWBDebuffStack:ShowConfig(spell, onChange)
         self.frame.minRageCond = minRageCond
     end
     self.frame.minRageCond:Show()
-    self.frame.minRageCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+    if lastFrame and lastFrame.SetPoint then
+        self.frame.minRageCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+    else
+        self.frame.minRageCond:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
+    end
     if spell["min_rage"] == nil or spell["min_rage"] == "" then
         spell["min_rage"] = 0
     end
