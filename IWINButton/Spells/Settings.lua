@@ -93,6 +93,27 @@ SPELL_TYPE_SCHEMAS = {
     
     Base = {
         -- Base spell type has no additional settings
+    },
+    
+    NextMelee = {
+        min_rage = { 
+            type = "number", 
+            min = 0, 
+            max = 100, 
+            default = 0,
+            label = "Min Rage",
+            width = 25,
+            maxLetters = 3
+        },
+        max_rage = { 
+            type = "number", 
+            min = 0, 
+            max = 100, 
+            default = 100,
+            label = "Max Rage",
+            width = 25,
+            maxLetters = 3
+        }
     }
 }
 
@@ -132,6 +153,8 @@ function GetSpellType(spell)
             return "Debuff"
         elseif handler == IWBRage then
             return "Rage"
+        elseif handler == IWBNextMelee then
+            return "NextMelee"
         else
             return "Base"
         end
