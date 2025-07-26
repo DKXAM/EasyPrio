@@ -4,6 +4,15 @@ IWBDebuffStack = IWBDebuff:New("DebuffStack")
 function IWBDebuffStack:ShowConfig(spell, onChange)
     local lastFrame = IWBDebuff.ShowConfig(self, spell, onChange)
 
+    -- Clean up existing debuffstack setting frames if they exist
+    if self.frame.debuffStackSettings then
+        for _, frame in pairs(self.frame.debuffStackSettings) do
+            frame:Hide()
+            frame:SetParent(nil)
+        end
+    end
+    self.frame.debuffStackSettings = {}
+
     -- Only create the max_stacks UI for DebuffStack
     local spellType = GetSpellType(spell)
     local schema = SPELL_TYPE_SCHEMAS[spellType]
@@ -15,6 +24,7 @@ function IWBDebuffStack:ShowConfig(spell, onChange)
             settingFrame:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
         end
         lastFrame = settingFrame
+        table.insert(self.frame.debuffStackSettings, settingFrame)
     end
 
     return lastFrame

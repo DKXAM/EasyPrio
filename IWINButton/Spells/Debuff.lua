@@ -9,6 +9,15 @@ end
 function IWBDebuff:ShowConfig(spell, onChange)
 	local lastFrame = IWBSpellBase.ShowConfig(self, spell, onChange)
 	
+	-- Clean up existing debuff setting frames if they exist
+	if self.frame.debuffSettings then
+		for _, frame in pairs(self.frame.debuffSettings) do
+			frame:Hide()
+			frame:SetParent(nil)
+		end
+	end
+	self.frame.debuffSettings = {}
+	
 	-- Only create UI for settings relevant to Debuff (target_hp, min_rage, max_rage)
 	local spellType = GetSpellType(spell)
 	local schema = SPELL_TYPE_SCHEMAS[spellType]
@@ -23,6 +32,7 @@ function IWBDebuff:ShowConfig(spell, onChange)
 					settingFrame:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
 				end
 				lastFrame = settingFrame
+				table.insert(self.frame.debuffSettings, settingFrame)
 			end
 		end
 	end
