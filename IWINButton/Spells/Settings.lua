@@ -162,6 +162,8 @@ function GetSpellType(spell)
             return "Debuff"
         elseif handler == IWBRage then
             return "Rage"
+        elseif handler == IWBRageNextMelee then
+            return "NextMelee"
         elseif handler == IWBNextMelee then
             return "NextMelee"
         else
@@ -212,6 +214,17 @@ function CreateSettingControl(parent, settingName, settingSchema, spell, onChang
         editBox:SetMaxLetters(settingSchema.maxLetters)
         editBox:SetAutoFocus(false)
         editBox:SetFontObject("GameFontHighlightSmall")
+        
+        -- Add backdrop for better visibility
+        editBox:SetBackdrop({
+            bgFile = "Interface\\Glues\\Common\\Glue-Tooltip-Background",
+            edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+            tile = true,
+            tileSize = 16,
+            edgeSize = 16,
+            insets = { left = 4, right = 4, top = 4, bottom = 4 }
+        })
+        editBox:SetBackdropColor(0, 0, 0, 0.5)
         
         -- Set initial value
         local currentValue = GetSpellSetting(spell, settingName)
