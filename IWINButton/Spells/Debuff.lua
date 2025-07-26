@@ -80,21 +80,21 @@ end
 function IWBDebuff:ShowConfig(spell, onChange)
 	local lastFrame = IWBSpellBase.ShowConfig(self, spell, onChange)
 	
-	-- Create settings controls using the unified system
+	-- Only create UI for settings relevant to Debuff (target_hp, min_rage)
 	local spellType = GetSpellType(spell)
 	local schema = SPELL_TYPE_SCHEMAS[spellType]
 	
 	if schema then
 		for settingName, settingSchema in pairs(schema) do
-			local settingFrame = CreateSettingControl(self.frame, settingName, settingSchema, spell, onChange)
-			
-			if lastFrame and lastFrame.SetPoint then
-				settingFrame:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
-			else
-				settingFrame:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
+			if settingName == "target_hp" or settingName == "min_rage" then
+				local settingFrame = CreateSettingControl(self.frame, settingName, settingSchema, spell, onChange)
+				if lastFrame and lastFrame.SetPoint then
+					settingFrame:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+				else
+					settingFrame:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
+				end
+				lastFrame = settingFrame
 			end
-			
-			lastFrame = settingFrame
 		end
 	end
 	
@@ -111,7 +111,9 @@ function IWBDebuff:IsReady(spell)
 		isReady = (not IWBUtils:FindDebuff(spell["name"], "target")) and (percent >= target_hp)
 
 		local min_rage = GetSpellSetting(spell, "min_rage")
-		if UnitMana("player") < min_rage then
+		local max_rage = GetSpellSetting(spell, "max_rage")
+		local rage = UnitMana("player")
+		if rage < min_rage or rage > max_rage then
 			return false, slot
 		end
 	end
