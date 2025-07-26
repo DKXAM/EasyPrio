@@ -225,6 +225,7 @@ function CreateSettingControl(parent, settingName, settingSchema, spell, onChang
             insets = { left = 4, right = 4, top = 4, bottom = 4 }
         })
         editBox:SetBackdropColor(0, 0, 0, 0.5)
+        editBox:SetTextInsets(6, 6, 2, 2)
         
         -- Set initial value
         local currentValue = GetSpellSetting(spell, settingName)
