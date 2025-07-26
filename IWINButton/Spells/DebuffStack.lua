@@ -1,6 +1,17 @@
 
 IWBDebuffStack = IWBDebuff:New("DebuffStack")
 
+-- Helper to check if a frame is a descendant of another
+local function IsDescendant(child, parent)
+    while child do
+        if child == parent then
+            return true
+        end
+        child = child.GetParent and child:GetParent() or nil
+    end
+    return false
+end
+
 function IWBDebuffStack:ShowConfig(spell, onChange)
     local lastFrame = IWBDebuff.ShowConfig(self, spell, onChange)
 
@@ -42,7 +53,7 @@ function IWBDebuffStack:ShowConfig(spell, onChange)
             self.frame.maxStackCond = maxStackCond
         end
             self.frame.maxStackCond:Show()
-    if lastFrame and lastFrame ~= self.frame.maxStackCond and lastFrame.SetPoint then
+    if lastFrame and lastFrame.SetPoint and not IsDescendant(self.frame.maxStackCond, lastFrame) then
         self.frame.maxStackCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
     else
         self.frame.maxStackCond:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
@@ -80,7 +91,7 @@ function IWBDebuffStack:ShowConfig(spell, onChange)
         self.frame.minRageCond = minRageCond
     end
     self.frame.minRageCond:Show()
-    if lastFrame and lastFrame ~= self.frame.minRageCond and lastFrame.SetPoint then
+    if lastFrame and lastFrame.SetPoint and not IsDescendant(self.frame.minRageCond, lastFrame) then
         self.frame.minRageCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
     else
         self.frame.minRageCond:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
