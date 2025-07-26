@@ -23,6 +23,15 @@ SPELL_TYPE_SCHEMAS = {
             width = 30,
             maxLetters = 3
         },
+        max_rage = { 
+            type = "number", 
+            min = 0, 
+            max = 100, 
+            default = 100,
+            label = "Max Rage",
+            width = 30,
+            maxLetters = 3
+        },
         target_hp = { 
             type = "number", 
             min = 0, 

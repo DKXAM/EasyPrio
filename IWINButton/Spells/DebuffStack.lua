@@ -24,7 +24,9 @@ function IWBDebuffStack:IsReady(spell)
     local isReady, slot = IWBSpellBase.IsReady(self, spell)
     if isReady then
         local min_rage = GetSpellSetting(spell, "min_rage")
-        if UnitMana("player") < min_rage then
+        local max_rage = GetSpellSetting(spell, "max_rage")
+        local rage = UnitMana("player")
+        if rage < min_rage or rage > max_rage then
             return false, slot
         end
         
