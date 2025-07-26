@@ -4,6 +4,15 @@ IWBRage = IWBSpellBase:New("Rage")
 function IWBRage:ShowConfig(spell, onChange)
     local lastFrame = IWBSpellBase.ShowConfig(self, spell, onChange)
 
+    -- Clean up existing rage setting frames if they exist
+    if self.frame.rageSettings then
+        for _, frame in pairs(self.frame.rageSettings) do
+            frame:Hide()
+            frame:SetParent(nil)
+        end
+    end
+    self.frame.rageSettings = {}
+
     -- Only create UI for settings relevant to Rage (min_rage, max_rage)
     local spellType = GetSpellType(spell)
     local schema = SPELL_TYPE_SCHEMAS[spellType]
@@ -17,6 +26,7 @@ function IWBRage:ShowConfig(spell, onChange)
                     settingFrame:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
                 end
                 lastFrame = settingFrame
+                table.insert(self.frame.rageSettings, settingFrame)
             end
         end
     end
