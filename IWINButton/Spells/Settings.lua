@@ -26,10 +26,10 @@ SPELL_TYPE_SCHEMAS = {
         max_rage = { 
             type = "number", 
             min = 0, 
-            max = 100, 
+            max = 120, 
             default = 100,
             label = "Max Rage",
-            width = 30,
+            width = 40,
             maxLetters = 3
         },
         target_hp = { 
@@ -56,10 +56,10 @@ SPELL_TYPE_SCHEMAS = {
         max_rage = { 
             type = "number", 
             min = 0, 
-            max = 100, 
+            max = 120, 
             default = 100,
             label = "Max Rage",
-            width = 30,
+            width = 40,
             maxLetters = 3
         },
         target_hp = { 
@@ -92,10 +92,10 @@ SPELL_TYPE_SCHEMAS = {
         max_rage = { 
             type = "number", 
             min = 0, 
-            max = 100, 
+            max = 120, 
             default = 100,
             label = "Max Rage",
-            width = 25,
+            width = 40,
             maxLetters = 3
         }
     },
@@ -117,10 +117,10 @@ SPELL_TYPE_SCHEMAS = {
         max_rage = { 
             type = "number", 
             min = 0, 
-            max = 100, 
+            max = 120, 
             default = 100,
             label = "Max Rage",
-            width = 25,
+            width = 40,
             maxLetters = 3
         }
     }
