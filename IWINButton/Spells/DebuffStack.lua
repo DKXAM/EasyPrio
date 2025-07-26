@@ -41,12 +41,12 @@ function IWBDebuffStack:ShowConfig(spell, onChange)
 
             self.frame.maxStackCond = maxStackCond
         end
-        self.frame.maxStackCond:Show()
-        if lastFrame and lastFrame.SetPoint then
-            self.frame.maxStackCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
-        else
-            self.frame.maxStackCond:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
-        end
+            self.frame.maxStackCond:Show()
+    if lastFrame and lastFrame ~= self.frame.maxStackCond and lastFrame.SetPoint then
+        self.frame.maxStackCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+    else
+        self.frame.maxStackCond:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
+    end
         self.frame.maxStackCond.editBox:SetText(spell["max_stacks"] or 5)
         lastFrame = self.frame.maxStackCond
     else
@@ -80,7 +80,7 @@ function IWBDebuffStack:ShowConfig(spell, onChange)
         self.frame.minRageCond = minRageCond
     end
     self.frame.minRageCond:Show()
-    if lastFrame and lastFrame.SetPoint then
+    if lastFrame and lastFrame ~= self.frame.minRageCond and lastFrame.SetPoint then
         self.frame.minRageCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
     else
         self.frame.minRageCond:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
