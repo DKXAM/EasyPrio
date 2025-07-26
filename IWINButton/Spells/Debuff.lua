@@ -80,25 +80,23 @@ end
 function IWBDebuff:ShowConfig(spell, onChange)
 	local lastFrame = IWBSpellBase.ShowConfig(self, spell, onChange)
 	
-	if IWB_SPELL_REF[spell["name"]] and IWB_SPELL_REF[spell["name"]]["target_hp"] then
-		self.frame.hpCond:Show()
-		self.frame.hpCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
-		if spell["target_hp"] == nil or spell["target_hp"] == "" then
-			spell["target_hp"] = 0
-		end
-		self.frame.hpCond.editBox:SetText(spell["target_hp"])
-		lastFrame = self.frame.hpCond
-	else
-		self.frame.hpCond:Hide()
-	end
+	-- Create settings controls using the unified system
+	local spellType = GetSpellType(spell)
+	local schema = SPELL_TYPE_SCHEMAS[spellType]
 	
-	-- Min Rage UI
-	self.frame.minRageCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
-	if spell["min_rage"] == nil or spell["min_rage"] == "" then
-		spell["min_rage"] = 0
+	if schema then
+		for settingName, settingSchema in pairs(schema) do
+			local settingFrame = CreateSettingControl(self.frame, settingName, settingSchema, spell, onChange)
+			
+			if lastFrame and lastFrame.SetPoint then
+				settingFrame:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+			else
+				settingFrame:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
+			end
+			
+			lastFrame = settingFrame
+		end
 	end
-	self.frame.minRageCond.editBox:SetText(spell["min_rage"])
-	lastFrame = self.frame.minRageCond
 	
 	return lastFrame
 end
@@ -106,15 +104,13 @@ end
 function IWBDebuff:IsReady(spell)
 	local isReady, slot = IWBSpellBase.IsReady(self, spell)
 	if isReady then
-		if spell["target_hp"] == nil or spell["target_hp"] == "" then
-			spell["target_hp"] = 0
-		end
+		local target_hp = GetSpellSetting(spell, "target_hp")
 		local hp = UnitHealth("target")
 		local maxhp = UnitHealthMax("target")
 		local percent = (maxhp > 0) and (hp / maxhp * 100) or 0
-		isReady = (not IWBUtils:FindDebuff(spell["name"], "target")) and (percent >= tonumber(spell["target_hp"]))
+		isReady = (not IWBUtils:FindDebuff(spell["name"], "target")) and (percent >= target_hp)
 
-		local min_rage = tonumber(spell["min_rage"]) or 0
+		local min_rage = GetSpellSetting(spell, "min_rage")
 		if UnitMana("player") < min_rage then
 			return false, slot
 		end

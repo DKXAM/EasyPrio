@@ -34,6 +34,7 @@ Spells\Channeled.lua
 Spells\Seal.lua
 Spells\NextMelee.lua
 Spells\BuffShieldBlock.lua
+Spells\Settings.lua
 Spells\Reference.lua
 
 Db.lua
