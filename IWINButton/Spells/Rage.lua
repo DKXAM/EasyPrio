@@ -4,18 +4,20 @@ IWBRage = IWBSpellBase:New("Rage")
 function IWBRage:ShowConfig(spell, onChange)
     local lastFrame = IWBSpellBase.ShowConfig(self, spell, onChange)
 
-    -- Create settings controls using the unified system
+    -- Only create UI for settings relevant to Rage (min_rage, max_rage)
     local spellType = GetSpellType(spell)
     local schema = SPELL_TYPE_SCHEMAS[spellType]
     if schema then
         for settingName, settingSchema in pairs(schema) do
-            local settingFrame = CreateSettingControl(self.frame, settingName, settingSchema, spell, onChange)
-            if lastFrame and lastFrame.SetPoint then
-                settingFrame:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
-            else
-                settingFrame:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
+            if settingName == "min_rage" or settingName == "max_rage" then
+                local settingFrame = CreateSettingControl(self.frame, settingName, settingSchema, spell, onChange)
+                if lastFrame and lastFrame.SetPoint then
+                    settingFrame:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+                else
+                    settingFrame:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
+                end
+                lastFrame = settingFrame
             end
-            lastFrame = settingFrame
         end
     end
     return lastFrame
