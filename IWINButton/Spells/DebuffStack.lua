@@ -4,25 +4,17 @@ IWBDebuffStack = IWBDebuff:New("DebuffStack")
 function IWBDebuffStack:ShowConfig(spell, onChange)
     local lastFrame = IWBDebuff.ShowConfig(self, spell, onChange)
 
-    -- Create settings controls using the unified system
+    -- Only create the max_stacks UI for DebuffStack
     local spellType = GetSpellType(spell)
     local schema = SPELL_TYPE_SCHEMAS[spellType]
-    
-    if schema then
-        for settingName, settingSchema in pairs(schema) do
-            -- Skip settings that are already handled by the parent class
-            if settingName ~= "target_hp" and settingName ~= "min_rage" then
-                local settingFrame = CreateSettingControl(self.frame, settingName, settingSchema, spell, onChange)
-                
-                if lastFrame and lastFrame.SetPoint then
-                    settingFrame:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
-                else
-                    settingFrame:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
-                end
-                
-                lastFrame = settingFrame
-            end
+    if schema and schema.max_stacks then
+        local settingFrame = CreateSettingControl(self.frame, "max_stacks", schema.max_stacks, spell, onChange)
+        if lastFrame and lastFrame.SetPoint then
+            settingFrame:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+        else
+            settingFrame:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
         end
+        lastFrame = settingFrame
     end
 
     return lastFrame
