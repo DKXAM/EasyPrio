@@ -18,7 +18,7 @@ IWB_SPELL_REF  = {
 	["Charge"] = {["handler"] = IWBSpellBase, ["no_rank"] = true},
 	["Hamstring"] = {["handler"] = IWBDebuff, ["no_rank"] = true, ["auto_target"] = true},
 	["Mocking Blow"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
-	["Overpower"] = {["handler"] = IWBSpellBase, ["no_rank"] = true},
+	["Overpower"] = {["handler"] = IWBRage, ["no_rank"] = true},
 	["Thunder Clap"] = {["handler"] = IWBDebuffOrSpell, ["no_rank"] = true},
 	["Demoralizing Shout"] = {["handler"] = IWBDebuffOrSpell, ["no_rank"] = true},
 	["Execute"] = {["handler"] = IWBRage, ["no_rank"] = true, ["auto_target"] = true},
