@@ -95,40 +95,32 @@ function IWBRage:CreateFrame()
 end
 
 function IWBRage:ShowConfig(spell, onChange)
-	local lastFrame = IWBSpellBase.ShowConfig(self, spell, onChange)
-	
-	self.frame.rageCond:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
-	if spell["rage"] == nil or spell["rage"] == "" then
-		spell["rage"] = 0
-	end
-	self.frame.rageCond.editBox:SetText(spell["rage"])
+    local lastFrame = IWBSpellBase.ShowConfig(self, spell, onChange)
 
-	-- Only show min/max rage for Execute
-	if spell["name"] == "Execute" then
-		self.frame.minMaxRageFrame:Show()
-		if spell["min_rage"] == nil or spell["min_rage"] == "" then
-			spell["min_rage"] = 0
-		end
-		if spell["max_rage"] == nil or spell["max_rage"] == "" then
-			spell["max_rage"] = 100
-		end
-		self.frame.minMaxRageFrame.minEdit:SetText(spell["min_rage"])
-		self.frame.minMaxRageFrame.maxEdit:SetText(spell["max_rage"])
-	else
-		self.frame.minMaxRageFrame:Hide()
-	end
+    -- Create settings controls using the unified system
+    local spellType = GetSpellType(spell)
+    local schema = SPELL_TYPE_SCHEMAS[spellType]
+    if schema then
+        for settingName, settingSchema in pairs(schema) do
+            local settingFrame = CreateSettingControl(self.frame, settingName, settingSchema, spell, onChange)
+            if lastFrame and lastFrame.SetPoint then
+                settingFrame:SetPoint("TOPLEFT", lastFrame, "BOTTOMLEFT", 0, 0)
+            else
+                settingFrame:SetPoint("TOPLEFT", self.frame, "TOPLEFT", 0, 0)
+            end
+            lastFrame = settingFrame
+        end
+    end
+    return lastFrame
 end
 
 function IWBRage:IsReady(spell)
-	local isReady, slot = IWBSpellBase.IsReady(self, spell)
-	if isReady then
-		local rage = UnitMana("player")
-		isReady = rage >= (tonumber(spell["rage"]) or 0)
-		if spell["name"] == "Execute" then
-			local min_rage = tonumber(spell["min_rage"]) or 0
-			local max_rage = tonumber(spell["max_rage"]) or 100
-			isReady = isReady and (rage >= min_rage) and (rage <= max_rage)
-		end
-	end
-	return isReady, slot
+    local isReady, slot = IWBSpellBase.IsReady(self, spell)
+    if isReady then
+        local rage = UnitMana("player")
+        local min_rage = GetSpellSetting(spell, "min_rage")
+        local max_rage = GetSpellSetting(spell, "max_rage")
+        isReady = (rage >= min_rage) and (rage <= max_rage)
+    end
+    return isReady, slot
 end

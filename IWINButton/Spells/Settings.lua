@@ -56,14 +56,11 @@ SPELL_TYPE_SCHEMAS = {
     },
     
     Rage = {
-        rage = { 
-            type = "number", 
-            min = 0, 
-            max = 100, 
-            default = 0,
-            label = "Rage >=",
-            width = 15,
-            maxLetters = 2
+        modifier = {
+            type = "modifier",
+            default = "None",
+            label = "Modifier",
+            options = {"None", "Shift", "Ctrl", "Alt", "Shift+Ctrl", "Shift+Alt", "Ctrl+Alt", "Shift+Ctrl+Alt"}
         },
         min_rage = { 
             type = "number", 
