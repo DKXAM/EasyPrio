@@ -3,6 +3,13 @@ IWBDb = {}
 
 function IWBDb:Initialize()
     EasyPrio_Data = EasyPrio_Data or {["buttons"] = {}}
+    
+    -- Add tooltip_spell_index to existing buttons that don't have it
+    for buttonName, buttonData in pairs(EasyPrio_Data["buttons"]) do
+        if buttonData["tooltip_spell_index"] == nil then
+            buttonData["tooltip_spell_index"] = 1
+        end
+    end
 end
 
 function IWBDb:IsButtonExists(name)
@@ -11,7 +18,7 @@ end
 
 function IWBDb:AddButton(name)
     if not IWBDb:IsButtonExists(name) then
-        EasyPrio_Data["buttons"][name] = { ["spells"] = {} }
+        EasyPrio_Data["buttons"][name] = { ["spells"] = {}, ["tooltip_spell_index"] = 1 }
     end
 end
 
@@ -127,4 +134,20 @@ function IWBDb:ChangeSpellOrderDown(name, index)
             spells[index] = tmpSpell
         end
     end
+end
+
+function IWBDb:SetTooltipSpellIndex(name, index)
+    if IWBDb:IsButtonExists(name) then
+        EasyPrio_Data["buttons"][name]["tooltip_spell_index"] = index
+    end
+end
+
+function IWBDb:GetTooltipSpellIndex(name)
+    if IWBDb:IsButtonExists(name) then
+        local button = EasyPrio_Data["buttons"][name]
+        if button["tooltip_spell_index"] then
+            return button["tooltip_spell_index"]
+        end
+    end
+    return 1
 end
