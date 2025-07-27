@@ -108,11 +108,11 @@ function IWBMainFrame:CreateFrame(parent)
 	borderBR:SetPoint("BOTTOMRIGHT", 0, 0)
 	
 	local titleText = frame:CreateFontString(nil, "BORDER", "GameFontNormal")
-	titleText:SetText("I.W.I.N. Button ")
+	titleText:SetText("EasyPrio")
 	titleText:SetPoint("TOP", frame, "TOP", 0, -17)
 	
 	local versionText = frame:CreateFontString(nil, "BORDER", "GameFontHighlightSmall")
-	versionText:SetText("v"..GetAddOnMetadata("IWINButton", "Version"))
+	versionText:SetText("v"..GetAddOnMetadata("EasyPrio", "Version"))
 	versionText:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -65, -18)
 
 	-- Close Button
