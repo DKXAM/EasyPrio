@@ -275,6 +275,20 @@ function IWBMainFrame:CreateRotation()
 	deleteButton:SetPoint("BOTTOMLEFT", 5, 5)
 	deleteButton:SetScript("OnClick", function() IWBMainFrame:DeleteSpellOnClick() end)
 	
+	-- Tooltip Spell Selection
+	
+	local tooltipText = spellProps:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	tooltipText:SetPoint("BOTTOMLEFT", 5, 35)
+	tooltipText:SetText("Use for macro tooltip:")
+	
+	local tooltipButton = CreateFrame("Button", nil, spellProps, "UIPanelButtonTemplate")
+	tooltipButton:SetWidth(80)
+	tooltipButton:SetHeight(22)
+	tooltipButton:SetText("Set Tooltip")
+	tooltipButton:SetPoint("BOTTOMLEFT", 130, 30)
+	tooltipButton:SetScript("OnClick", function() IWBMainFrame:SetTooltipSpellOnClick() end)
+	rotationTab.tooltipButton = tooltipButton
+	
 	-- Change Order
 	
 	local changeOrderText = spellProps:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -394,10 +408,21 @@ function IWBMainFrame:MacrosOnClick()
 	local macroName = buttonName
 	local macroScript = '/script IWButton_Run("'..buttonName..'")'
 	local macroIcon = 6
+	
+	-- Add #showtooltip functionality
+	local tooltipSpellIndex = IWBDb:GetTooltipSpellIndex(buttonName)
+	local tooltipSpell = IWBDb:GetSpellByIndex(buttonName, tooltipSpellIndex)
+	if tooltipSpell then
+		local spellName = tooltipSpell["name"]
+		if tooltipSpell["rank"] and tooltipSpell["rank"] ~= "" then
+			spellName = spellName .. "(" .. tooltipSpell["rank"] .. ")"
+		end
+		macroScript = '#showtooltip ' .. spellName .. '\n' .. macroScript
+	end
 
 	local macroIndex = GetMacroIndexByName(macroName)
 	if macroIndex > 0 then
-		--EditMacro(macroIndex, macroName, macroIcon, macroScript, nil, 1)
+		EditMacro(macroIndex, macroName, macroIcon, macroScript, nil, 1)
 	else
 		CreateMacro(macroName, macroIcon, macroScript, nil, 1)
 		macroIndex = GetMacroIndexByName(macroName)
@@ -462,6 +487,16 @@ function IWBMainFrame:SpellListOnChange()
 				IWBMainFrame.frame.rotationTab.orderDownButton:Enable()
 			end
 			
+			-- Update tooltip button based on whether this spell is the current tooltip spell
+			local currentTooltipIndex = IWBDb:GetTooltipSpellIndex(button)
+			if spellIndex == currentTooltipIndex then
+				IWBMainFrame.frame.rotationTab.tooltipButton:SetText("Current")
+				IWBMainFrame.frame.rotationTab.tooltipButton:Disable()
+			else
+				IWBMainFrame.frame.rotationTab.tooltipButton:SetText("Set Tooltip")
+				IWBMainFrame.frame.rotationTab.tooltipButton:Enable()
+			end
+			
 			local spellHandler = IWBSpellBase
 			if IWB_SPELL_REF[spell["name"]] ~= nil then
 				spellHandler = IWB_SPELL_REF[spell["name"]]["handler"]
@@ -509,6 +544,19 @@ function IWBMainFrame:ChangeOrderDownOnClick()
 		if spellIndex < IWBDb:GetSpellCount(buttonName) then
 			IWBDb:ChangeSpellOrderDown(buttonName, spellIndex)
 			IWBMainFrame.frame.rotationTab.scrollFrame:SetSelected(spellIndex + 1)
+		end
+	end
+end
+
+function IWBMainFrame:SetTooltipSpellOnClick()
+	local buttonName = IWBMainFrame:getSelectedButton()
+	if buttonName ~= nil then
+		local spellIndex = IWBMainFrame.frame.rotationTab.scrollFrame:GetSelected()
+		if spellIndex > 0 then
+			IWBDb:SetTooltipSpellIndex(buttonName, spellIndex)
+			-- Update button text to show feedback
+			IWBMainFrame.frame.rotationTab.tooltipButton:SetText("Current")
+			IWBMainFrame.frame.rotationTab.tooltipButton:Disable()
 		end
 	end
 end
