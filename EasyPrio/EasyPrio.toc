@@ -1,0 +1,75 @@
+## Interface: 11200
+## Title: EasyPrio
+## Version: 1.0.0
+## Author: DKXAM
+## Notes: Priority-based macro automation for Turtle WoW. Create spell priority lists with conditional casting. Because manually tracking cooldowns is for tryhards and we're here to be comfortably lazy.
+## Notes-short: Lazy priority-based macro automation for Turtle WoW
+## Description: EasyPrio lets you create priority-based spell rotations with drag-and-drop GUI. Set conditions like "don't cast Rend if target already has Rend" and let the addon handle your rotation while you focus on positioning and tactics.
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## SavedVariables: 
+## SavedVariablesPerCharacter: EasyPrio_Data
+## OptionalDeps: 
+## Dependencies: 
+## X-Category: Combat
+## X-License: MIT
+## X-Curse-Project-ID: 
+## X-WoWI-ID: 
+## X-Credits: Based on IWINButton by Murashko, maintained by Steelbash. Enhanced with modular class system.
+## X-Embeds: 
+## X-Website: https://github.com/DKXAM/EasyPrio
+## X-Feedback: https://github.com/DKXAM/EasyPrio/issues
+
+# UI Templates
+UITemplates\TabButtonTemplate.lua
+UITemplates\DropDownTemplate.lua
+UITemplates\ScrollFrameTemplate.lua
+UITemplates\SpellItemTemplate.lua
+
+# Spells
+Spells\Base.lua
+Spells\Attack.lua
+Spells\Autoshot.lua
+Spells\SteadyShot.lua
+
+Spells\Buff.lua
+Spells\IfBuff.lua
+Spells\Debuff.lua
+Spells\DebuffDot.lua
+Spells\BuffWithDebuff.lua
+Spells\Combopoint.lua
+Spells\CombopointAndBuff.lua
+Spells\CombopointAndDebuff.lua
+Spells\DebuffStack.lua
+Spells\DebuffOrSpell.lua
+Spells\Rage.lua
+Spells\Bloodrage.lua
+Spells\RageNextMelee.lua
+Spells\Stance.lua
+Spells\Channeled.lua
+Spells\Seal.lua
+Spells\NextMelee.lua
+Spells\BuffShieldBlock.lua
+Spells\Settings.lua
+
+# Class References
+References\BaseReference.lua
+References\WarriorReference.lua
+References\RogueReference.lua
+References\PriestReference.lua
+References\WarlockReference.lua
+References\MageReference.lua
+References\DruidReference.lua
+References\ShamanReference.lua
+References\HunterReference.lua
+References\PaladinReference.lua
+
+Spells\Reference.lua
+
+Db.lua
+Utils.lua
+Tooltip.lua
+ButtonFrame.lua
+MainFrame.lua
+EasyPrio.lua
+
