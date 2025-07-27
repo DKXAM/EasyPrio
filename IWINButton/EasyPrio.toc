@@ -1,8 +1,10 @@
 ## Interface: 11200
-## Title: I.W.I.N. Button
-## Version: 1.10.2
-## Author: Murashko
-## SavedVariablesPerCharacter: IWB_Data
+## Title: EasyPrio
+## Version: 2.0.0
+## Author: DKXAM
+## Notes: Priority-based macro automation for Turtle WoW. Because manually tracking cooldowns is for tryhards and we're here to be comfortably lazy.
+## OriginalAuthor: Based on IWINButton by Murashko, maintained by Steelbash
+## SavedVariablesPerCharacter: EasyPrio_Data
 
 # UI Templates
 UITemplates\TabButtonTemplate.lua
@@ -35,6 +37,19 @@ Spells\Seal.lua
 Spells\NextMelee.lua
 Spells\BuffShieldBlock.lua
 Spells\Settings.lua
+
+# Class References
+References\BaseReference.lua
+References\WarriorReference.lua
+References\RogueReference.lua
+References\PriestReference.lua
+References\WarlockReference.lua
+References\MageReference.lua
+References\DruidReference.lua
+References\ShamanReference.lua
+References\HunterReference.lua
+References\PaladinReference.lua
+
 Spells\Reference.lua
 
 Db.lua
@@ -42,5 +57,5 @@ Utils.lua
 Tooltip.lua
 ButtonFrame.lua
 MainFrame.lua
-IWINButton.lua
+EasyPrio.lua
 

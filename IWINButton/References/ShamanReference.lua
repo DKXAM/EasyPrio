@@ -1,0 +1,32 @@
+-- Shaman class spells
+IWB_SHAMAN_SPELL_REF = {
+	["Flame Shock"] = {["handler"] = IWBDebuff, ["auto_target"] = true, ["target_hp"] = true},
+	["Earth Shield"] = {["handler"] = IWBBuff},
+	["Fire Resistance Totem"] = {["handler"] = IWBBuff, ["alias"] = "Fire Resistance"},
+	["Flametongue Totem"] = {["handler"] = IWBBuff, ["alias"] = "Flametongue Totem Passive"},
+	["Frost Resistance Totem"] = {["handler"] = IWBBuff, ["alias"] = "Frost Resistance"},
+	["Grace of Air Totem"] = {["handler"] = IWBBuff, ["alias"] = "Grace of Air"},
+	["Grounding Totem"] = {["handler"] = IWBBuff, ["alias"] = "Grounding Totem Effect"},
+	["Lightning Shield"] = {["handler"] = IWBBuff},
+	["Nature Resistance Totem"] = {["handler"] = IWBBuff, ["alias"] = "Nature Resistance"},
+	["Stoneskin Totem"] = {["handler"] = IWBBuff, ["alias"] = "Stoneskin"},
+	["Strength of Earth Totem"] = {["handler"] = IWBBuff, ["alias"] = "Strength of Earth"},
+	["Healing Stream Totem"] = {["handler"] = IWBBuff, ["alias"] = "Healing Stream"},
+	["Mana Spring Totem"] = {["handler"] = IWBBuff, ["alias"] = "Mana Spring"},
+	["Windwall Totem"] = {["handler"] = IWBBuff, ["alias"] = "Windwall"},
+	["Tranquil Air Totem"] = {["handler"] = IWBBuff, ["alias"] = "Tranquil Air"},
+	["Water Breathing"] = {["handler"] = IWBBuff},
+	["Water Shield"] = {["handler"] = IWBBuff},
+	["Water Walking"] = {["handler"] = IWBBuff},
+	["Windfury Totem"] = {["handler"] = IWBBuff, ["alias"] = "Windfury Totem Effect"},
+	
+	["Rockbiter Weapon"] = {["handler"] = IWBBuff, ["alias"] = "Rockbiter"},
+	["Frostbrand Weapon"] = {["handler"] = IWBBuff, ["alias"] = "Frostbrand"},
+	["Flametongue Weapon"] = {["handler"] = IWBBuff, ["alias"] = "Flametongue"},
+	["Windfury Weapon"] = {["handler"] = IWBBuff, ["alias"] = "Windfury"},
+	
+	["Earth Shock"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
+	["Frost Shock"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
+	["Stormstrike"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
+	["Lightning Strike"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
+}

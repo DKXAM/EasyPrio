@@ -1,254 +1,60 @@
 
-IWB_SPELL_REF  = {
-	["Attack"] = {["handler"] = IWBAttack, ["auto_target"] = true},
-	["Auto Shot"] = {["handler"] = IWBAutoshot},
-	["Find Herbs"] = {["handler"] = IWBBuff},
-	["Find Minerals"] = {["handler"] = IWBBuff},
-	
-	-- Warrior
-	
-	["Heroic Strike"] = {["handler"] = IWBRageNextMelee, ["no_rank"] = true, ["auto_target"] = true},
-	["Battle Shout"] = {["handler"] = IWBBuff, ["no_rank"] = true},
-	["Cleave"] = {["handler"] = IWBRageNextMelee, ["no_rank"] = true, ["auto_target"] = true},
-	["Rend"] = {["handler"] = IWBDebuff, ["no_rank"] = true, ["auto_target"] = true, ["target_hp"] = true},
-	["Sunder Armor"] = { ["handler"] = IWBDebuffStack, ["no_rank"] = true, ["auto_target"] = true, ["duration"] = 30, ["target_hp"] = true },
-	["Battle Stance"] = {["handler"] = IWBStance},
-	["Defensive Stance"] = {["handler"] = IWBStance},
-	["Berseker Stance"] = {["handler"] = IWBStance},
-	["Charge"] = {["handler"] = IWBSpellBase, ["no_rank"] = true},
-	["Hamstring"] = {["handler"] = IWBDebuff, ["no_rank"] = true, ["auto_target"] = true},
-	["Mocking Blow"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
-	["Overpower"] = {["handler"] = IWBRage, ["no_rank"] = true, ["auto_target"] = true},
-	["Thunder Clap"] = {["handler"] = IWBDebuffOrSpell, ["no_rank"] = true},
-	["Demoralizing Shout"] = {["handler"] = IWBDebuffOrSpell, ["no_rank"] = true},
-	["Execute"] = {["handler"] = IWBRage, ["no_rank"] = true, ["auto_target"] = true},
-	["Intercept"] = {["handler"] = IWBSpellBase, ["no_rank"] = true},
-	["Intervene"] = {["handler"] = IWBSpellBase, ["no_rank"] = true},
-	["Revenge"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
-	["Shield Bash"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
-	["Shield Block"] = {["handler"] = IWBShieldBlock, ["no_rank"] = true},
-	["Mortal Strike"] = {["handler"] = IWBRage, ["no_rank"] = true, ["auto_target"] = true},
-	["Bloodthirst"] = {["handler"] = IWBRage, ["no_rank"] = true, ["auto_target"] = true},
-	["Shield Slam"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
-	["Concussion Blow"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
-	["Slam"] = {["handler"] = IWBRage, ["no_rank"] = true, ["auto_target"] = true},
-	["Counterattack"] = {["handler"] = IWBSpellBase, ["no_rank"] = true},
-	["Whirlwind"] = {["handler"] = IWBRage},
-	["Pummel"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-	["Disarm"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-	["Bloodrage"] = {["handler"] = IWBBloodrage, ["no_rank"] = true},
-	
-	-- Rogue
-	
-	["Ambush"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
-	["Cheap Shot"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-	["Envenom"] = {["handler"] = IWBCombopointAndBuff, ["no_rank"] = true},
-	["Eviscerate"] = {["handler"] = IWBCombopoint, ["no_rank"] = true, ["auto_target"] = true},
-	["Sinister Strike"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
-	["Slice and Dice"] = {["handler"] = IWBCombopointAndBuff, ["no_rank"] = true},
-	["Expose Armor"] = {["handler"] = IWBCombopointAndDebuff, ["no_rank"] = true, ["auto_target"] = true},
-	["Garrote"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
-	["Kidney Shot"] = {["handler"] = IWBCombopoint, ["no_rank"] = true, ["auto_target"] = true},
-	["Rupture"] = {["handler"] = IWBCombopointAndDebuff, ["no_rank"] = true, ["auto_target"] = true},
-	["Backstab"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
-	["Feint"] = {["handler"] = IWBSpellBase, ["no_rank"] = true},
-	["Flourish"] = {["handler"] = IWBCombopoint, ["no_rank"] = true, ["auto_target"] = true},
-	["Gouge"] = {["handler"] = IWBSpellBase, ["no_rank"] = true},
-	["Kick"] = {["handler"] = IWBSpellBase, ["no_rank"] = true, ["auto_target"] = true},
-	["Sprint"] = {["handler"] = IWBSpellBase, ["no_rank"] = true},
-	["Sap"] = {["handler"] = IWBSpellBase, ["no_rank"] = true},
-	["Stealth"] = {["handler"] = IWBBuff, ["no_rank"] = true},
-	["Vanish"] = {["handler"] = IWBSpellBase, ["no_rank"] = true},
-	["Ghostly Strike"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-	["Hemorrhage"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-	["Mark for Death"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
+-- Dynamic spell reference system
+-- Loads base spells + class-specific spells based on player class
 
+-- Initialize the main spell reference table
+IWB_SPELL_REF = {}
 
-	-- Priest
-	
-	["Divine Spirit"] = {["handler"] = IWBBuff, ["alias"] = "Prayer of Spirit"},
-	["Fear Ward"] = {["handler"] = IWBBuff, ["self_only"] = true},
-	["Inner Fire"] = {["handler"] = IWBBuff, ["self_only"] = true},
-	["Power Word: Fortitude"] = {["handler"] = IWBBuff, ["alias"] = "Prayer of Fortitude", ["self_only"] = true},
-	["Power Word: Shield"] = {["handler"] = IWBBuffWithDebuff, ["debuff"] = "Weakened Soul", ["self_only"] = true},
-	["Prayer of Fortitude"] = {["handler"] = IWBBuff, ["self_only"] = true},
-	["Prayer of Spirit"] = {["handler"] = IWBBuff, ["self_only"] = true},
-	["Shadow Protection"] = {["handler"] = IWBBuff, ["self_only"] = true},
-	["Prayer of Shadow Protection"] = {["handler"] = IWBBuff, ["self_only"] = true},
-	["Mind Flay"] = {["handler"] = IWBChanneled},
-	["Holy Fire"] = {["handler"] = IWBDebuffOrSpell},
-	["Shadow Word: Pain"] = {["handler"] = IWBDebuffDot, ["duration"] = 18, ["target_hp"] = true},
-	
-	-- Warlock
-
-	
-	["Corruption"] = {["handler"] = IWBDebuffDot, ["duration"] = 15, ["target_hp"] = true},
-	["Curse of Agony"] = {["handler"] = IWBDebuffDot, ["duration"] = 24, ["target_hp"] = true},
-	["Curse of Recklessness"] = {["handler"] = IWBDebuff},
-	["Curse of Shadow"] = {["handler"] = IWBDebuff},
-	["Curse of Tongues"] = {["handler"] = IWBDebuff},
-	["Curse of the Elements"] = {["handler"] = IWBDebuff},
-	["Curse of the Elements"] = {["handler"] = IWBDebuff},
-	["Immolate"] = {["handler"] = IWBDebuffDot, ["duration"] = 15, ["target_hp"] = true},
-	["Siphon Life"] = {["handler"] = IWBDebuff},
-	["Curse of Exhaustion"] = {["handler"] = IWBDebuff},
-	
-	["Drain Life"] = {["handler"] = IWBChanneled},
-	["Drain Mana"] = {["handler"] = IWBChanneled},
-	["Drain Soul"] = {["handler"] = IWBChanneled},
-	["Health Funnel"] = {["handler"] = IWBChanneled},
-	["Mana Funnel"] = {["handler"] = IWBChanneled},
-	["Dark Harvest"] = {["handler"] = IWBChanneled},
-	
-	["Demon Armor"] = {["handler"] = IWBBuff},
-	["Detect Greater Invisibility"] = {["handler"] = IWBBuff},
-	["Detect Invisibility"] = {["handler"] = IWBBuff},
-	["Detect Lesser Invisibility"] = {["handler"] = IWBBuff},
-	["Unending Breath"] = {["handler"] = IWBBuff},
-
-	-- Mage
-	
-	["Arcane Brilliance"] = {["handler"] = IWBBuff},
-	["Arcane Intellect"] = {["handler"] = IWBBuff, ["alias"] = "Arcane Brilliance"},
-	["Arcane Missiles"] = {["handler"] = IWBChanneled},
-	["Detect Magic"] = {["handler"] = IWBDebuff},
-	["Evocation"] = {["handler"] = IWBChanneled},
-	["Mage Armor"] = {["handler"] = IWBBuff},
-	["Mana Shield"] = {["handler"] = IWBBuff},
-	["Slow Fall"] = {["handler"] = IWBBuff},
-	["Frost Armor"] = {["handler"] = IWBBuff},
-	["Ice Armor"] = {["handler"] = IWBBuff},
-	["Ice Barrier"] = {["handler"] = IWBBuff},
-	["Icicles"] = {["handler"] = IWBChanneled},
-
-	-- Druid
-
-    ["Entangling Roots"] = {["handler"] = IWBDebuff},
-    ["Faerie Fire"] = {["handler"] = IWBDebuff},
-    ["Demoralizing Roar"] = {["handler"] = IWBDebuff},
-    ["Faerie Fire (Feral)"] = {["handler"] = IWBDebuff},
-	["Insect Swarm"] = {["handler"] = IWBDebuffDot, ["duration"] = 18, ["target_hp"] = true},
-    ["Moonfire"] = {["handler"] = IWBDebuffDot, ["duration"] = 18, ["target_hp"] = true},
+-- Function to merge spell tables
+local function MergeSpellTables(base, class)
+    local merged = {}
     
-    ["Wrath"] = {["handler"] = IWBIfBuff, ["buff_list"] = {"None", "Natural Boon", "Nature Eclipse"}},
-    ["Starfire"] = {["handler"] = IWBIfBuff, ["buff_list"] = {"None", "Astral Boon", "Arcane Eclipse"}},
-  
-    ["Thorns"] = {["handler"] = IWBBuff},
-    ["Aquatic Form"] = {["handler"] = IWBBuff},
-    ["Cat Form"] = {["handler"] = IWBBuff},
-    ["Dire Bear Form"] = {["handler"] = IWBBuff},
-    ["Bear Form"] = {["handler"] = IWBBuff},
-    ["Prowl"] = {["handler"] = IWBBuff},
-    ["Travel Form"] = {["handler"] = IWBBuff},
-    ["Abolish Poison"] = {["handler"] = IWBBuff},
-    ["Gift of the Wild"] = {["handler"] = IWBBuff},
-    ["Mark of the Wild"] = {["handler"] = IWBBuff, ["alias"] = "Gift of the Wild"},
-    ["Moonkin Form"] = {["handler"] = IWBBuff},
-    ["Tree of Life Form"] = {["handler"] = IWBBuff},
+    -- Add base spells first
+    if base then
+        for spellName, spellData in pairs(base) do
+            merged[spellName] = spellData
+        end
+    end
     
-    ["Ferocious Bite"] = {["handler"] = IWBCombopoint, ["no_rank"] = true, ["auto_target"] = true},
-    ["Rip"] = {["handler"] = IWBCombopointAndDebuff, ["no_rank"] = true, ["auto_target"] = true},
-    ["Savage Bite"] = {["handler"] = IWBRage, ["no_rank"] = true, ["auto_target"] = true},
-    ["Swipe"] = {["handler"] = IWBRage, ["no_rank"] = true, ["auto_target"] = true},
-    ["Maul"] = {["handler"] = IWBRageNextMelee, ["no_rank"] = true, ["auto_target"] = true},
+    -- Add class spells (will override base if same name)
+    if class then
+        for spellName, spellData in pairs(class) do
+            merged[spellName] = spellData
+        end
+    end
     
-    ["Bash"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-    ["Claw"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-    ["Rake"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-    ["Ravage"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-    ["Shred"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-	
-	
-	
-	-- Shaman
+    return merged
+end
 
-	["Flame Shock"] = {["handler"] = IWBDebuff, ["auto_target"] = true, ["target_hp"] = true},
-	["Earth Shield"] = {["handler"] = IWBBuff},
-	["Fire Resistance Totem"] = {["handler"] = IWBBuff, ["alias"] = "Fire Resistance"},
-	["Flametongue Totem"] = {["handler"] = IWBBuff, ["alias"] = "Flametongue Totem Passive"},
-	["Frost Resistance Totem"] = {["handler"] = IWBBuff, ["alias"] = "Frost Resistance"},
-	["Grace of Air Totem"] = {["handler"] = IWBBuff, ["alias"] = "Grace of Air"},
-	["Grounding Totem"] = {["handler"] = IWBBuff, ["alias"] = "Grounding Totem Effect"},
-	["Lightning Shield"] = {["handler"] = IWBBuff},
-	["Nature Resistance Totem"] = {["handler"] = IWBBuff, ["alias"] = "Nature Resistance"},
-	["Stoneskin Totem"] = {["handler"] = IWBBuff, ["alias"] = "Stoneskin"},
-	["Strength of Earth Totem"] = {["handler"] = IWBBuff, ["alias"] = "Strength of Earth"},
-	["Healing Stream Totem"] = {["handler"] = IWBBuff, ["alias"] = "Healing Stream"},
-	["Mana Spring Totem"] = {["handler"] = IWBBuff, ["alias"] = "Mana Spring"},
-	["Windwall Totem"] = {["handler"] = IWBBuff, ["alias"] = "Windwall"},
-	["Tranquil Air Totem"] = {["handler"] = IWBBuff, ["alias"] = "Tranquil Air"},
-	["Water Breathing"] = {["handler"] = IWBBuff},
-	["Water Shield"] = {["handler"] = IWBBuff},
-	["Lightning Shield"] = {["handler"] = IWBBuff},
-	["Water Walking"] = {["handler"] = IWBBuff},
-	["Windfury Totem"] = {["handler"] = IWBBuff, ["alias"] = "Windfury Totem Effect"},
-	
-	["Rockbiter Weapon"] = {["handler"] = IWBBuff, ["alias"] = "Rockbiter"},
-	["Frostbrand Weapon"] = {["handler"] = IWBBuff, ["alias"] = "Frostbrand"},
-	["Flametongue Weapon"] = {["handler"] = IWBBuff, ["alias"] = "Flametongue"},
-	["Windfury Weapon"] = {["handler"] = IWBBuff, ["alias"] = "Windfury"},
-	
-	["Earth Shock"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-	["Frost Shock"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-	["Stormstrike"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-	["Lightning Strike"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-	
+-- Function to load appropriate class reference
+local function LoadClassReference()
+    local playerClass = UnitClass("player")
+    local classRef = nil
+    
+    if playerClass == "Warrior" and IWB_WARRIOR_SPELL_REF then
+        classRef = IWB_WARRIOR_SPELL_REF
+    elseif playerClass == "Rogue" and IWB_ROGUE_SPELL_REF then
+        classRef = IWB_ROGUE_SPELL_REF
+    elseif playerClass == "Priest" and IWB_PRIEST_SPELL_REF then
+        classRef = IWB_PRIEST_SPELL_REF
+    elseif playerClass == "Warlock" and IWB_WARLOCK_SPELL_REF then
+        classRef = IWB_WARLOCK_SPELL_REF
+    elseif playerClass == "Mage" and IWB_MAGE_SPELL_REF then
+        classRef = IWB_MAGE_SPELL_REF
+    elseif playerClass == "Druid" and IWB_DRUID_SPELL_REF then
+        classRef = IWB_DRUID_SPELL_REF
+    elseif playerClass == "Shaman" and IWB_SHAMAN_SPELL_REF then
+        classRef = IWB_SHAMAN_SPELL_REF
+    elseif playerClass == "Hunter" and IWB_HUNTER_SPELL_REF then
+        classRef = IWB_HUNTER_SPELL_REF
+    elseif playerClass == "Paladin" and IWB_PALADIN_SPELL_REF then
+        classRef = IWB_PALADIN_SPELL_REF
+    end
+    
+    -- Merge base and class references
+    IWB_SPELL_REF = MergeSpellTables(IWB_BASE_SPELL_REF, classRef)
+end
 
-	-- Hunter
-	
-	["Aspect of the Beast"] = {["handler"] = IWBBuff},
-	["Aspect of the Cheetah"] = {["handler"] = IWBBuff},
-	["Aspect of the Hawk"] = {["handler"] = IWBBuff},
-	["Aspect of the Monkey"] = {["handler"] = IWBBuff},
-	["Aspect of the Pack"] = {["handler"] = IWBBuff},
-	["Hunter's Mark"] = {["handler"] = IWBDebuff},
-	["Scorpid Sting"] = {["handler"] = IWBDebuff},
-	["Serpent Sting"] = {["handler"] = IWBDebuff, ["target_hp"] = true},
-	["Viper Sting"] = {["handler"] = IWBDebuff},
-	["Track Beasts"] = {["handler"] = IWBBuff},
-	["Track Demons"] = {["handler"] = IWBBuff},
-	["Track Elementals"] = {["handler"] = IWBBuff},
-	["Track Giants"] = {["handler"] = IWBBuff},
-	["Track Hidden"] = {["handler"] = IWBBuff},
-	["Track Humanoids"] = {["handler"] = IWBBuff},
-	["Track Undead"] = {["handler"] = IWBBuff},
-	["Steady Shot"] = {["handler"] = IWBSteadyShot},
-	["Raptor Strike"] = {["handler"] = IWBNextMelee, ["auto_target"] = true, ["need_range"] = 3},
-	["Mongoose Bite"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-	["Wing Clip"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-	["Carve"] = {["handler"] = IWBSpellBase,  ["need_range"] = 3},
-
-	-- Paladin
-	
-	["Seal of Light"] = {["handler"] = IWBSeal, ["debuff"] = "Judgement of Light"},
-	["Seal of Wisdom"] = {["handler"] = IWBSeal, ["debuff"] = "Judgement of Wisdom"},
-	["Seal of the Crusader"] = {["handler"] = IWBSeal, ["debuff"] = "Judgement of the Crusader"},
-	["Seal of Justice"] = {["handler"] = IWBSeal, ["debuff"] = "Judgement of Justice"},
-	["Seal of Righteousness"] = {["handler"] = IWBSeal},
-	["Seal of Command"] = {["handler"] = IWBSeal},
-	
-	["Blessing of Wisdom"] = {["handler"] = IWBBuff, ["alias"] = "Greater Blessing of Wisdom"},
-	["Greater Blessing of Wisdom"] = {["handler"] = IWBBuff},
-	["Blessing of Light"] = {["handler"] = IWBBuff},
-	["Sense Undead"] = {["handler"] = IWBBuff},
-	["Blessing of Salvation"] = {["handler"] = IWBBuff},
-	["Concentration Aura"] = {["handler"] = IWBBuff},
-	["Devotion Aura"] = {["handler"] = IWBBuff},
-	["Righteous Fury"] = {["handler"] = IWBBuff},
-										   
-	["Divine Protection"] = {["handler"] = IWBBuffWithDebuff, ["debuff"] = "Forbearance"},
-	["Divine Shield"] = {["handler"] = IWBBuffWithDebuff, ["debuff"] = "Forbearance"},
-	["Hand of Protection"] = {["handler"] = IWBBuffWithDebuff, ["debuff"] = "Forbearance"},
-	
-	["Blessing of Kings"] = {["handler"] = IWBBuff, ["alias"] = "Greater Blessing of Kings"},
-	["Greater Blessing of Kings"] = {["handler"] = IWBBuff},
-	["Blessing of Might"] = {["handler"] = IWBBuff, ["alias"] = "Greater Blessing of Might"},
-	["Greater Blessing of Might"] = {["handler"] = IWBBuff},
-	["Retribution Aura"] = {["handler"] = IWBBuff},
-	["Blessing of Sanctuary"] = {["handler"] = IWBBuff},
-	
-	["Holy Strike"] = {["handler"] = IWBNextMelee, ["auto_target"] = true},
-	["Crusader Strike"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-	["Judgement"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-}
+-- Load the appropriate reference when this file is loaded
+LoadClassReference()
 

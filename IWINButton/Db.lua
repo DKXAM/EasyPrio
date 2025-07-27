@@ -2,22 +2,22 @@
 IWBDb = {}
 
 function IWBDb:Initialize()
-    IWB_Data = IWB_Data or {["buttons"] = {}}
+    EasyPrio_Data = EasyPrio_Data or {["buttons"] = {}}
 end
 
 function IWBDb:IsButtonExists(name)
-    return name ~= nil and IWB_Data["buttons"][name] ~= nil 
+    return name ~= nil and EasyPrio_Data["buttons"][name] ~= nil 
 end
 
 function IWBDb:AddButton(name)
     if not IWBDb:IsButtonExists(name) then
-        IWB_Data["buttons"][name] = { ["spells"] = {} }
+        EasyPrio_Data["buttons"][name] = { ["spells"] = {} }
     end
 end
 
 function IWBDb:GetButtonNames()
     local names={}
-    for k,v in pairs(IWB_Data["buttons"]) do
+    for k,v in pairs(EasyPrio_Data["buttons"]) do
         table.insert(names, k)
     end
     return names
@@ -28,7 +28,7 @@ function IWBDb:GetButtonByName(name)
         return nil
     end
 	
-    return IWB_Data["buttons"][name]
+    return EasyPrio_Data["buttons"][name]
 end
 
 function IWBDb:GetButtonCount()
@@ -44,12 +44,12 @@ function IWBDb:GetSpellCount(name)
         return 0
     end
 
-    return table.getn(IWB_Data["buttons"][name]["spells"])
+    return table.getn(EasyPrio_Data["buttons"][name]["spells"])
 end
 
 function IWBDb:GetSpellByIndex(name, index)
     if IWBDb:IsButtonExists(name) then
-        local spells = IWB_Data["buttons"][name]["spells"]
+        local spells = EasyPrio_Data["buttons"][name]["spells"]
         if index >= 1 and index <= table.getn(spells) then
             return spells[index]
         end
@@ -66,27 +66,27 @@ function IWBDb:ChangeButtonName(oldName, newName)
         return
     end
 
-    IWB_Data["buttons"][newName] = IWB_Data["buttons"][oldName]
-    IWB_Data["buttons"][oldName] = nil
+    EasyPrio_Data["buttons"][newName] = EasyPrio_Data["buttons"][oldName]
+    EasyPrio_Data["buttons"][oldName] = nil
 end
 
 
 function IWBDb:DeleteButton(name)
     if IWBDb:IsButtonExists(name) then
-        IWB_Data["buttons"][name] = nil
+        EasyPrio_Data["buttons"][name] = nil
     end
 end
 
 function IWBDb:AddSpell(name, spell)
     if IWBDb:IsButtonExists(name) then
-        table.insert(IWB_Data["buttons"][name]["spells"], spell)
+        table.insert(EasyPrio_Data["buttons"][name]["spells"], spell)
     end
 end
 
 
 function IWBDb:SetSpellMaxRank(name, index)
     if IWBDb:IsButtonExists(name) then
-        local spells = IWB_Data["buttons"][name]["spells"]
+        local spells = EasyPrio_Data["buttons"][name]["spells"]
 		
         if index >= 1 and index <= table.getn(spells) then
             spells[index]["rank"] = nil
@@ -97,7 +97,7 @@ end
 
 function IWBDb:DeleteSpell(name, index)
     if IWBDb:IsButtonExists(name) then
-        local spells = IWB_Data["buttons"][name]["spells"]
+        local spells = EasyPrio_Data["buttons"][name]["spells"]
 		
         if index >= 1 and index <= table.getn(spells) then
             table.remove(spells, index)
@@ -107,7 +107,7 @@ end
 
 function IWBDb:ChangeSpellOrderUp(name, index)
     if IWBDb:IsButtonExists(name) then
-        local spells = IWB_Data["buttons"][name]["spells"]
+        local spells = EasyPrio_Data["buttons"][name]["spells"]
 		
         if index >= 2 and index <= table.getn(spells) then
             local tmpSpell = spells[index-1]
@@ -119,7 +119,7 @@ end
 
 function IWBDb:ChangeSpellOrderDown(name, index)
 	if IWBDb:IsButtonExists(name) then
-        local spells = IWB_Data["buttons"][name]["spells"]
+        local spells = EasyPrio_Data["buttons"][name]["spells"]
 		
         if index >= 1 and index < table.getn(spells) then
             local tmpSpell = spells[index+1]

@@ -11,7 +11,7 @@ function frame:CreateSpellBookButton()
 	local IWButton = CreateFrame("Button", nil, SpellBookFrame, "UIPanelButtonTemplate")
 	IWButton:SetWidth(120)
 	IWButton:SetHeight(22)
-	IWButton:SetText("I.W.I.N. Button")
+	IWButton:SetText("EasyPrio")
 	IWButton:SetPoint("TOP", 0, -42)
 
 	IWButton:SetScript("OnClick", function()
