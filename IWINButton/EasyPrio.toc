@@ -1,10 +1,24 @@
 ## Interface: 11200
 ## Title: EasyPrio
-## Version: 2.0.0
+## Version: 1.0.0
 ## Author: DKXAM
-## Notes: Priority-based macro automation for Turtle WoW. Because manually tracking cooldowns is for tryhards and we're here to be comfortably lazy.
-## OriginalAuthor: Based on IWINButton by Murashko, maintained by Steelbash
+## Notes: Priority-based macro automation for Turtle WoW. Create spell priority lists with conditional casting. Because manually tracking cooldowns is for tryhards and we're here to be comfortably lazy.
+## Notes-short: Lazy priority-based macro automation for Turtle WoW
+## Description: EasyPrio lets you create priority-based spell rotations with drag-and-drop GUI. Set conditions like "don't cast Rend if target already has Rend" and let the addon handle your rotation while you focus on positioning and tactics.
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## SavedVariables: 
 ## SavedVariablesPerCharacter: EasyPrio_Data
+## OptionalDeps: 
+## Dependencies: 
+## X-Category: Combat
+## X-License: MIT
+## X-Curse-Project-ID: 
+## X-WoWI-ID: 
+## X-Credits: Based on IWINButton by Murashko, maintained by Steelbash. Enhanced with modular class system.
+## X-Embeds: 
+## X-Website: https://github.com/DKXAM/EasyPrio
+## X-Feedback: https://github.com/DKXAM/EasyPrio/issues
 
 # UI Templates
 UITemplates\TabButtonTemplate.lua
