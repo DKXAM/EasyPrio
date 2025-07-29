@@ -51,8 +51,15 @@ function IWBDebuff:IsReady(spell)
 
 		local min_rage = GetSpellSetting(spell, "min_rage")
 		local max_rage = GetSpellSetting(spell, "max_rage")
-		local rage = UnitMana("player")
-		if rage < min_rage or rage > max_rage then
+		
+		-- Get current resource (rage for warriors/druids, mana for others)
+		local currentResource = UnitMana("player")
+		
+		-- Only check resource constraints if they're actually set
+		if min_rage and min_rage > 0 and currentResource < min_rage then
+			return false, slot
+		end
+		if max_rage and max_rage > 0 and currentResource > max_rage then
 			return false, slot
 		end
 	end

@@ -2,6 +2,18 @@
 -- This file defines schemas for different spell types and provides helper functions
 -- for generating UI and validating settings.
 
+-- Helper function to get the appropriate resource name for the player's class
+function GetPlayerResourceName()
+    local _, playerClass = UnitClass("player")
+    if playerClass == "WARRIOR" or playerClass == "DRUID" then
+        return "Rage"
+    elseif playerClass == "ROGUE" then
+        return "Energy"
+    else
+        return "Mana" -- Default for hunters, priests, mages, warlocks, paladins, shamans
+    end
+end
+
 -- Schema definitions for different spell types
 SPELL_TYPE_SCHEMAS = {
     DebuffStack = {
@@ -202,7 +214,19 @@ function CreateSettingControl(parent, settingName, settingSchema, spell, onChang
     frame:SetHeight(22)
     
     local label = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-    label:SetText(settingSchema.label)
+    
+    -- Use dynamic resource name for rage-related settings
+    local labelText = settingSchema.label
+    if settingName == "min_rage" or settingName == "max_rage" then
+        local resourceName = GetPlayerResourceName()
+        if settingName == "min_rage" then
+            labelText = "Min " .. resourceName
+        else
+            labelText = "Max " .. resourceName
+        end
+    end
+    
+    label:SetText(labelText)
     label:SetPoint("TOPLEFT", 0, 0)
     
     if settingSchema.type == "number" then
