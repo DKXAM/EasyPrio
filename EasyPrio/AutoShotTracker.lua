@@ -219,19 +219,31 @@ function AutoShotTracker.PredMidShot()
 end
 
 function AutoShotTracker.IsReadyToCast(castTime)
+    -- Debug output
+    local midShot = AutoShotTracker.PredMidShot()
+    local isReloadingNow, reloadTimeLeft = AutoShotTracker.GetSecondsRemainingReload()
+    
+    DEFAULT_CHAT_FRAME:AddMessage("AutoShotTracker: midShot=" .. tostring(midShot) .. 
+        ", isReloading=" .. tostring(isReloadingNow) .. 
+        ", reloadTimeLeft=" .. tostring(reloadTimeLeft) .. 
+        ", castTime=" .. tostring(castTime or 1.5))
+    
     -- Don't cast if we're mid auto shot (would clip)
-    if AutoShotTracker.PredMidShot() then
+    if midShot then
+        DEFAULT_CHAT_FRAME:AddMessage("AutoShotTracker: BLOCKING - mid auto shot")
         return false
     end
     
     -- Check if we're reloading - this is the safe window to cast
-    local isReloadingNow, reloadTimeLeft = AutoShotTracker.GetSecondsRemainingReload()
     if isReloadingNow then
         -- Make sure we have enough time to complete the cast
-        return reloadTimeLeft >= (castTime or 1.5)
+        local canCast = reloadTimeLeft >= (castTime or 1.5)
+        DEFAULT_CHAT_FRAME:AddMessage("AutoShotTracker: Reloading - canCast=" .. tostring(canCast))
+        return canCast
     end
     
     -- If not reloading and not shooting, we're safe to cast
+    DEFAULT_CHAT_FRAME:AddMessage("AutoShotTracker: ALLOWING - safe to cast")
     return true
 end
 
