@@ -10,6 +10,8 @@ frame:RegisterEvent("CHAT_MSG_SPELL_FAILED_LOCALPLAYER")
 
 frame:SetScript('OnEvent', function()
 	if event == "CHAT_MSG_SPELL_FAILED_LOCALPLAYER" then
+		-- Debug: Show all spell failure messages
+		DEFAULT_CHAT_FRAME:AddMessage("EasyPrio Debug: Spell failed message: " .. tostring(arg1), 0.5, 0.5, 1)
 		ImmuneTracker:ProcessImmuneMessage(arg1)
 	end
 end)
@@ -19,7 +21,17 @@ function ImmuneTracker:ProcessImmuneMessage(message)
 	local spellName, targetName = string.match(message, "Your (%w+) failed%. (.+) is immune%.")
 	
 	if spellName and targetName then
+		DEFAULT_CHAT_FRAME:AddMessage("EasyPrio Debug: Matched immune pattern - Spell: " .. spellName .. ", Target: " .. targetName, 0.5, 1, 0.5)
 		self:AddImmuneTarget(targetName, spellName)
+	else
+		-- Try alternative patterns
+		spellName, targetName = string.match(message, "Your (.+) failed%. (.+) is immune%.")
+		if spellName and targetName then
+			DEFAULT_CHAT_FRAME:AddMessage("EasyPrio Debug: Matched immune pattern (alt) - Spell: " .. spellName .. ", Target: " .. targetName, 0.5, 1, 0.5)
+			self:AddImmuneTarget(targetName, spellName)
+		else
+			DEFAULT_CHAT_FRAME:AddMessage("EasyPrio Debug: No immune pattern matched", 1, 0.5, 0.5)
+		end
 	end
 end
 
