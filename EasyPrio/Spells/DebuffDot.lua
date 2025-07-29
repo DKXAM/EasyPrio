@@ -56,8 +56,11 @@ function IWBDebuffDot:IsReady(spell)
 	isReady = isReady and UnitCanAttack("player", "target") and isExists
 
 	if isReady then
-		isReady = (not IWBUtils:FindDebuff(spell["name"], "target")) or 
-				  IWBDebuffDot:IsUnitDotTimeOut(spell["name"], uuid)
+		-- Check if target is immune to this spell
+		isReady = isReady and (not ImmuneTracker:IsCurrentTargetImmuneToSpell(spell["name"]))
+		
+		isReady = isReady and ((not IWBUtils:FindDebuff(spell["name"], "target")) or 
+				  IWBDebuffDot:IsUnitDotTimeOut(spell["name"], uuid))
 		
 		if spell["target_hp"] == nil or spell["target_hp"] == "" then
 			spell["target_hp"] = 0

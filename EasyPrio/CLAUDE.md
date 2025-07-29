@@ -38,10 +38,49 @@ A World of Warcraft vanilla (1.12.1) addon that simplifies macro creation by pro
 - `libs/libspell.lua` - Spell information and utilities
 - `compat/vanilla.lua` - Vanilla-specific compatibility code
 
-**Coding Patterns to Learn for IWINButton:**
+**Coding Patterns to Learn for EasyPrio:**
 - GUI window creation and frame management
 - Drag and drop spell handling
 - Buff/debuff condition checking
 - Spell cooldown and availability detection
 - Configuration persistence for spell lists
 - Event-driven spell state monitoring
+
+## Naming Conventions
+
+**IMPORTANT**: Do NOT use "IWB" prefixes anymore. Use descriptive names instead:
+- Instead of `IWBSomething`, use descriptive names like `ImmuneTracker`, `SpellRotationHandler`, `MainConfigFrame`, etc.
+- Avoid generic prefixes - use meaningful, descriptive class/module names
+- The only remaining "IWB" references should be legacy code that hasn't been refactored yet
+
+## Combat Log Events Reference
+
+For vanilla WoW 1.12.1, combat log messages appear as chat events:
+- `CHAT_MSG_SPELL_FAILED_LOCALPLAYER` - For spell failures including immune messages
+- `CHAT_MSG_SPELL_SELF_DAMAGE` - For damage dealt by player spells  
+- `CHAT_MSG_COMBAT_SELF_MISSES` - For player combat misses
+
+Reference library: https://github.com/refaim/Vanilla-WoW-1.12-Addon-Development-Libraries-Archive
+
+## Development & Testing Workflow
+
+### Branch Strategy
+- **main**: Stable, tested features
+- **feature branches**: New development (e.g., `immune-detection`, `tooltip-improvements`)
+- **testing**: Branch for in-game testing
+
+### Testing Process
+1. **Develop on feature branch**: Create feature branch from main for new work
+2. **Commit and push to testing**: When ready to test, commit changes and push to testing branch
+3. **In-game testing**: Use Turtle WoW launcher with GitHub link pointing to testing branch
+4. **Avoid local folder issues**: This workflow prevents addon folder corruption that can occur when restarting WoW with local file changes
+5. **Merge to main**: Once tested and stable, merge feature branch to main
+
+### Commands for Testing
+```bash
+git add .
+git commit -m "feat: add immune detection system"
+git push origin testing
+```
+
+Then configure Turtle WoW launcher to use: `https://github.com/DKXAM/EasyPrio/tree/testing`

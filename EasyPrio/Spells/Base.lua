@@ -176,6 +176,11 @@ function IWBSpellBase:IsReady(spell)
 		isReady = isReady and (CheckInteractDistance("target", IWB_SPELL_REF[spell["name"]]["need_range"]) == 1)
 	end
 	
+	-- Check if current target is immune to this spell
+	if isReady and UnitExists("target") then
+		isReady = isReady and (not ImmuneTracker:IsCurrentTargetImmuneToSpell(spell["name"]))
+	end
+	
 	return isReady, slot
 end
 
