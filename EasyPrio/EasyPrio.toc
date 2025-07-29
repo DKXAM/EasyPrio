@@ -1,6 +1,6 @@
 ## Interface: 11200
 ## Title: EasyPrio
-## Version: 1.0.0
+## Version: 1.1.0
 ## Author: DKXAM
 ## Notes: Priority-based macro automation for Turtle WoW. Create spell priority lists with conditional casting. Because manually tracking cooldowns is for tryhards and we're here to be comfortably lazy.
 ## Notes-short: Lazy priority-based macro automation for Turtle WoW
