@@ -28,6 +28,7 @@ UITemplates\SpellItemTemplate.lua
 
 # Spells
 Spells\Base.lua
+Spells\ImmuneTracker.lua
 Spells\Attack.lua
 Spells\Autoshot.lua
 Spells\SteadyShot.lua
