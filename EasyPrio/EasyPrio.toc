@@ -29,8 +29,11 @@ UITemplates\SpellItemTemplate.lua
 # Spells
 Spells\Base.lua
 Spells\ImmuneTracker.lua
+AutoShotTracker.lua
 Spells\Attack.lua
 Spells\Autoshot.lua
+Spells\HunterShot.lua
+Spells\CastedHunterShot.lua
 Spells\SteadyShot.lua
 
 Spells\Buff.lua
