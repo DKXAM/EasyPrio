@@ -29,5 +29,5 @@ IWB_WARRIOR_SPELL_REF = {
 	["Whirlwind"] = {["handler"] = IWBRage},
 	["Pummel"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
 	["Disarm"] = {["handler"] = IWBSpellBase, ["auto_target"] = true},
-	["Bloodrage"] = {["handler"] = IWBBloodrage, ["no_rank"] = true},
+	["Bloodrage"] = {["handler"] = IWBRage, ["no_rank"] = true},
 }
